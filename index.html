@@ -6,8 +6,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-
-/* GLOBAL */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -15,7 +13,6 @@ body {
   background: linear-gradient(135deg, #667eea, #764ba2);
 }
 
-/* SIDEBAR */
 .sidebar {
   width: 240px;
   height: 100vh;
@@ -44,22 +41,14 @@ body {
   background: #33334d;
 }
 
-/* MAIN */
 .main {
   flex: 1;
   padding: 40px;
 }
 
-/* SECTION */
-.section {
-  display: none;
-}
+.section { display: none; }
+.active { display: block; }
 
-.active {
-  display: block;
-}
-
-/* CARD */
 .card {
   background: white;
   padding: 25px;
@@ -70,7 +59,6 @@ body {
   text-align: center;
 }
 
-/* INPUT */
 input, select {
   width: 90%;
   padding: 10px;
@@ -78,70 +66,61 @@ input, select {
   border-radius: 8px;
 }
 
-/* BUTTON */
 button.primary {
   background: #667eea;
   color: white;
   padding: 10px;
   border: none;
   border-radius: 8px;
+  cursor: pointer;
 }
 
-/* TEXT */
 .highlight {
   font-weight: bold;
   color: #667eea;
 }
 
+iframe {
+  margin-top: 15px;
+  border-radius: 10px;
+}
 </style>
-
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
   <h2>MindEase</h2>
-
-  <button onclick="showSection('home')">🏠 Home</button>
-  <button onclick="showSection('checkin')">Check-In</button>
+  <button onclick="showSection('home')">🏠a Home</button>
+  <button onclick="showSection('checkin')">🔔 Check-In</button>
   <button onclick="showSection('history')">📊 Analytics</button>
-  <button onclick="showSection('study')">📚 Study Plan</button>
-  <button onclick="showSection('support')">📞 Support</button>
+  <button onclick="showSection('study')">📚 Study</button>
+  <button onclick="showSection('wellness')">🌿 Wellness</button>
 </div>
 
-<!-- MAIN -->
 <div class="main">
 
 <!-- HOME -->
 <div id="home" class="section active">
   <div class="card">
-    <h1 id="welcomeText">Welcome to Student Stress Relief Kit</h1>
-
-    <p>
-      “Your mental health is an investment, not an expense.”
-    </p>
-
-    <p>
-      Track your stress, understand patterns, and take action.
-    </p>
+    <h1 id="welcomeText">Welcome to Student Stress Relief Kit
+    <p>Your personal mental wellness dashboard</p>
+    <p>“Your mental health matters as much as your success.”</p>
   </div>
 </div>
 
-<!-- LOGIN + CHECK-IN -->
+<!-- CHECK-IN -->
 <div id="checkin" class="section">
   <div class="card">
 
-    <h2>Login</h2>
+    <h2>Login + Check-In</h2>
     <input type="text" id="name" placeholder="Enter your name">
-
-    <h3>Stress Check-In</h3>
 
     <select id="reason">
       <option value="exam">Exams</option>
       <option value="pressure">Academic Pressure</option>
-      <option value="time">Time Management </option>
-      <option value="personal">Personal or Family issues </option>
+      <option value="time">Time Management Issues</option>
+      <option value="personal">Personal or family issues </option>
     </select>
 
     <select id="frequency">
@@ -163,6 +142,12 @@ button.primary {
       <p id="insight" class="highlight"></p>
 
       <canvas id="stressChart"></canvas>
+
+      <h3>Recommended Video</h3>
+      <iframe id="videoFrame" width="100%" height="200"></iframe>
+
+      <h3>Helpful Resource</h3>
+      <a id="resourceLink" target="_blank">Visit Resource</a>
     </div>
 
   </div>
@@ -173,7 +158,6 @@ button.primary {
   <div class="card">
     <h2>Stress Analytics</h2>
     <canvas id="historyChart"></canvas>
-
     <p id="trendText"></p>
   </div>
 </div>
@@ -181,21 +165,93 @@ button.primary {
 <!-- STUDY -->
 <div id="study" class="section">
   <div class="card">
-    <h2>Personalized Study Plan</h2>
-    <p id="studyPlan"></p>
+    <h2>Study Guidance</h2>
+    <p>
+      
+Students today face many types of stress. It can come from exams, family problems, health issues, peer pressure, or even too many expectations. This stress often affects their focus, confidence, and overall academic performance. 
+As a result, students may feel lost, tired, or unmotivated to study. In such situations, proper guidance and a simple study plan can make a big difference in helping them regain control.
+
+The first step in motivating a stressed student is understanding their situation. Every student is different, and their stress may come from different reasons. Some may feel pressure to score high marks, while others may struggle with time management or lack of interest in certain subjects. 
+Listening to them calmly and without judgment helps them feel supported and less alone.
+
+Once the problem is understood, it is important to build motivation slowly. Instead of forcing students to study for long hours, encourage them to take small steps. 
+Even studying for 30–40 minutes with full focus is better than sitting for hours without concentration. 
+Appreciating their small efforts can boost their confidence and make them feel capable again.
+A well-planned study routine plays a key role in reducing stress. A simple and flexible study plan helps students stay organized and focused. The plan should include:
+
+Short study sessions: Divide subjects into smaller topics and study them one at a time.
+
+Breaks in between: Taking 5–10 minute breaks helps refresh the mind.
+
+Priority setting: Start with important or difficult subjects when the mind is fresh.
+
+Realistic goals: Set daily and weekly goals that are easy to achieve.
+
+Revision time: Keep time for revision to strengthen understanding.
+It is also important to balance study with rest and relaxation. 
+
+Proper sleep, a healthy diet, and some physical activity can improve both mental and physical health.
+
+ Encouraging students to talk to friends, family, or teachers can also reduce stress.
+
+
+Another helpful method is teaching students to avoid distractions. Keeping mobile phones away while studying, choosing a quiet place, and following a fixed schedule can improve concentration. At the same time, students should be reminded that it is okay to make mistakes. 
+Learning from mistakes is a part of growth.
+Teachers and parents play an important role in motivating students. Instead of focusing only on results, they should support effort and improvement. Positive words, patience, and encouragement can help students feel stronger and more confident.
+
+In conclusion, stress is a common part of student life, but it should not stop their progress. With proper support, motivation, and a simple study plan, students can overcome challenges and perform better in their academics. The goal is not just good marks, but a healthy and confident mindset that helps them succeed in the long run.
+    </p>
   </div>
 </div>
 
-<!-- SUPPORT -->
-<div id="support" class="section">
+<!-- WELLNESS -->
+<div id="wellness" class="section">
   <div class="card">
-    <h2>Support</h2>
+    <h2>Wellness Hub 🌿</h2>
 
-    <p>📞 Helpline: 9152987821</p>
+    <p>
+      The Importance of Mental Wellness for Stressed Students
 
-    <a href="https://forms.gle/r2ByWGVgDnxsgugj8" target="_blank">
-      <button class="primary">Talk to Someone</button>
-    </a>
+Students who face stress in their academic life often struggle not only with studies but also with their mental well-being. Stress from exams, expectations, or personal problems can affect how students think, feel, and behave. That is why focusing on mental wellness is just as important as focusing on studies.
+
+Mental wellness means having a healthy state of mind where a student can manage stress, stay calm, and think clearly. It is not about being happy all the time, but about being able to handle challenges in a balanced way. When students take care of their mental health, they are better able to focus, learn, and perform well in their academics.
+
+One of the biggest benefits of good mental wellness is reduced stress and anxiety. When students feel mentally strong, they can handle pressure in a better way. This helps them stay calm during exams and avoid panic. Studies show that mental well-being improves concentration and focus, which are very important for academic success.
+
+Mental wellness also helps students build confidence and positive thinking. When the mind is clear and relaxed, students are more motivated to study and achieve their goals. On the other hand, poor mental health can lead to problems like lack of interest, low energy, and difficulty in understanding subjects.
+
+Another important point is that mental health affects physical health too. Students who are stressed may face issues like poor sleep, headaches, or tiredness. But when they follow healthy habits like proper sleep, exercise, and relaxation, their overall well-being improves.
+
+To support mental wellness, students should follow some simple habits:
+
+- Take regular breaks while studying
+- Get enough sleep every day
+- Talk to someone when feeling stressed
+- Practice simple relaxation techniques like deep breathing
+- Maintain a balanced routine of study and rest
+
+It is also important for parents and teachers to create a supportive environment. Students should feel safe to share their problems without fear of judgment. Encouragement and understanding can help them feel stronger and more confident.
+
+In conclusion, mental wellness plays a very important role in a student’s academic journey. Without a healthy mind, it becomes difficult to study effectively. By focusing on mental health along with a proper study plan, students can reduce stress, improve performance, and lead a more balanced and successful life.
+
+Helpful Resources for Mental Wellness:
+
+- https://www.psychreg.org/why-mental-health-important-students/
+
+- https://www.ketto.org/health-tips/why-mental-health-is-important-for-students
+
+- https://www.medanta.org/patient-education-blog/student-stress-study-tips-and-self-care-for-success
+
+These websites provide simple tips and guidance to help students manage stress and improve their mental well-being.
+    </p>
+
+    <iframe width="100%" height="200" src="https://www.youtube.com/embed/inpok4MKVLM"></iframe>
+
+    <p>
+      <a href="https://www.healthline.com/nutrition/16-ways-relieve-stress-anxiety" target="_blank">
+        Learn more about stress management
+      </a>
+    </p>
   </div>
 </div>
 
@@ -208,7 +264,6 @@ function showSection(id) {
   document.getElementById(id).classList.add('active');
 }
 
-// ANALYZE FUNCTION
 function analyze() {
   let name = document.getElementById("name").value;
   let frequency = parseInt(document.getElementById("frequency").value);
@@ -216,34 +271,39 @@ function analyze() {
   let reason = document.getElementById("reason").value;
 
   if(name === "") {
-    alert("Enter name");
+    alert("Enter your name");
     return;
   }
 
   let score = frequency + sleep;
 
-  let result = score >= 5 ? "High stress detected" : "Moderate stress";
+  let result = score >= 5 ? 
+    "🔴 You are experiencing high stress." :
+    "🟡 You have moderate stress levels.";
 
-  // SMART INSIGHT
-  let insight = score >= 5 ? 
-    "Your stress is consistently high. Consider structured breaks." :
-    "Your stress is manageable but monitor it regularly.";
+  let insight = score >= 5 ?
+    "Take breaks, manage workload, and prioritize mental health." :
+    "Maintain balance and monitor stress regularly.";
 
-  // STUDY PLAN
-  let plan = "";
-  if(reason === "exam") plan = "Use Pomodoro + revision cycles";
-  else if(reason === "time") plan = "Plan your day with priorities";
-  else plan = "Focus on one task at a time";
+  let video = "";
+  let link = "";
+
+  if(reason === "exam") {
+    video = "https://www.youtube.com/embed/IlU-zDU6aQ0";
+    link = "https://www.verywellmind.com/tips-to-reduce-exam-stress-2795369";
+  } else {
+    video = "https://www.youtube.com/embed/odADwWzHR24";
+    link = "https://www.helpguide.org/articles/stress/stress-management.htm";
+  }
 
   document.getElementById("result").style.display = "block";
   document.getElementById("output").innerText = result;
   document.getElementById("insight").innerText = insight;
-  document.getElementById("studyPlan").innerText = plan;
+  document.getElementById("videoFrame").src = video;
+  document.getElementById("resourceLink").href = link;
 
-  document.getElementById("welcomeText").innerText =
-    "Welcome " + name;
+  document.getElementById("welcomeText").innerText = "Welcome " + name;
 
-  // CHART
   new Chart(document.getElementById("stressChart"), {
     type: 'bar',
     data: {
@@ -252,20 +312,15 @@ function analyze() {
     }
   });
 
-  // SAVE HISTORY
   let history = JSON.parse(localStorage.getItem("history")) || [];
-
   history.push({ score: score });
-
   localStorage.setItem("history", JSON.stringify(history));
 
   loadHistory();
 }
 
-// HISTORY
 function loadHistory() {
   let history = JSON.parse(localStorage.getItem("history")) || [];
-
   let data = history.map(h => h.score);
 
   new Chart(document.getElementById("historyChart"), {
@@ -276,7 +331,6 @@ function loadHistory() {
     }
   });
 
-  // TREND DETECTION
   if(data.length >= 2) {
     let trend = data[data.length-1] > data[0] ?
       "⚠️ Stress increasing over time" :
