@@ -15,21 +15,36 @@
   <button onclick="startSurvey()">Start Check-In</button>
 
   <div id="survey" class="card" style="display:none;">
-    <h2>Step 1: Stress Level</h2>
-    <input type="range" min="1" max="10" id="stressLevel">
-    <p>Select your stress level (1–10)</p>
+  <h2>Stress Check-In</h2>
 
-    <h2>Step 2: Main Reason</h2>
-    <select id="reason">
-      <option value="exam">Exams</option>
-      <option value="pressure">Performance Pressure</option>
-      <option value="time">Time Management</option>
-      <option value="personal">Personal Issues</option>
-    </select>
+  <p>Stress Level (1–10)</p>
+  <input type="range" min="1" max="10" id="stressLevel">
 
-    <br><br>
-    <button onclick="analyze()">Analyze</button>
-  </div>
+  <p>How well are you sleeping?</p>
+  <select id="sleep">
+    <option value="1">Poor</option>
+    <option value="2">Average</option>
+    <option value="3">Good</option>
+  </select>
+
+  <p>Difficulty concentrating?</p>
+  <select id="focus">
+    <option value="3">High</option>
+    <option value="2">Medium</option>
+    <option value="1">Low</option>
+  </select>
+
+  <p>Main Stress Reason</p>
+  <select id="reason">
+    <option value="exam">Exams</option>
+    <option value="pressure">Pressure</option>
+    <option value="time">Time Issues</option>
+    <option value="personal">Personal</option>
+  </select>
+
+  <br><br>
+  <button onclick="analyze()">Analyze</button>
+</div>
 
   <div id="result" class="card" style="display:none;">
     <h2>Your Stress Report</h2>
