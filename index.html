@@ -46,16 +46,23 @@
   <button onclick="analyze()">Analyze</button>
 </div>
 
-  <div id="result" class="card" style="display:none;">
-    <h2>Your Stress Report</h2>
-    <p id="output"></p>
+ <div id="result" class="card" style="display:none;">
+  <h2>Your Stress Report</h2>
 
-    <h3>Recommended Video</h3>
+  <div class="meter">
+    <div id="stressBar"></div>
+  </div>
+
+  <p id="scoreText"></p>
+
+  <p id="output"></p>
+
+  <h3>Recommended Video</h3>
   <iframe id="videoFrame" width="300" height="200"></iframe>
 
-    <br><br>
-    <button onclick="restart()">Start Again</button>
-  </div>
+  <br><br>
+  <button onclick="restart()">Start Again</button>
+</div>
 
 </div>
 
