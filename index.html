@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Student Stress Relief Kit</title>
+<title>MindEase – Student Stress Analyzer</title>
 
 <style>
 body {
@@ -53,7 +53,7 @@ button:hover {
 
 <div class="container">
 
-<h1>Student Stress Relief Kit </h1>
+<h1>MindEase</h1>
 <p>Smart Mental Wellness for Students</p>
 
 <!-- LOGIN -->
@@ -68,7 +68,7 @@ button:hover {
 <div id="survey" class="card" style="display:none;">
   <h2>How are you feeling today?</h2>
 
-  <p>What is stressing you most?</p>
+  <p>Main stress reason</p>
   <select id="reason">
     <option value="exam">Exams</option>
     <option value="pressure">Academic Pressure</option>
@@ -96,11 +96,24 @@ button:hover {
 <!-- RESULT -->
 <div id="result" class="card" style="display:none;">
   <h2>Your Stress Report</h2>
+
+  <h3 id="userDisplay"></h3>
+
   <p id="output"></p>
 
+  <h3>Recommended Video</h3>
   <iframe id="videoFrame" width="300" height="200"></iframe>
 
-  <br><br>
+  <h3>Your Study Plan</h3>
+  <p id="plan"></p>
+
+  <h3>Need Support?</h3>
+  <ul style="text-align:left;">
+    <li>📞 India Helpline: 9152987821</li>
+    <li>🌐 https://www.mentalhealth.gov</li>
+    <li>💬 Talk to a trusted friend or counselor</li>
+  </ul>
+
   <button onclick="restart()">Start Again</button>
 </div>
 
@@ -110,11 +123,15 @@ button:hover {
 
 function startSurvey() {
   let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
 
-  if(name === "") {
-    alert("Please enter your name");
+  if(name === "" || email === "") {
+    alert("Please fill all details");
     return;
   }
+
+  localStorage.setItem("userName", name);
+  localStorage.setItem("userEmail", email);
 
   document.getElementById("login").style.display = "none";
   document.getElementById("survey").style.display = "block";
@@ -129,30 +146,53 @@ function analyze() {
 
   let result = "";
   let video = "";
+  let plan = "";
 
   if(score >= 5) {
-    result = "High stress detected. You may need structured support.";
+    result = "🔴 High stress detected. You may need structured support.";
   } else if(score >= 3) {
-    result = "Moderate stress. Try managing routines better.";
+    result = "🟡 Moderate stress. Try improving daily habits.";
   } else {
-    result = "Low stress. Keep maintaining balance!";
+    result = "🟢 Low stress. Keep maintaining balance!";
   }
 
   if(reason === "exam") {
     video = "https://www.youtube.com/embed/IlU-zDU6aQ0";
-  } else if(reason === "pressure") {
-    video = "https://www.youtube.com/embed/ZToicYcHIOU";
-  } else if(reason === "time") {
-    video = "https://www.youtube.com/embed/mNBmG24djoY";
-  } else {
-    video = "https://www.youtube.com/embed/odADwWzHR24";
+    plan = "📚 Study Plan: Use Pomodoro (25 min study + 5 min break)";
   }
+  else if(reason === "pressure") {
+    video = "https://www.youtube.com/embed/ZToicYcHIOU";
+    plan = "💡 Focus on one task at a time and avoid overthinking";
+  }
+  else if(reason === "time") {
+    video = "https://www.youtube.com/embed/mNBmG24djoY";
+    plan = "⏳ Plan your day using priorities and to-do lists";
+  }
+  else {
+    video = "https://www.youtube.com/embed/odADwWzHR24";
+    plan = "🧘 Take time for yourself and practice relaxation";
+  }
+
+  let user = localStorage.getItem("userName");
 
   document.getElementById("survey").style.display = "none";
   document.getElementById("result").style.display = "block";
 
+  document.getElementById("userDisplay").innerText =
+    "Hello " + user + ", here is your report:";
+
   document.getElementById("output").innerText = result;
   document.getElementById("videoFrame").src = video;
+  document.getElementById("plan").innerText = plan;
+
+  let report = {
+    score: score,
+    result: result,
+    reason: reason,
+    date: new Date().toLocaleString()
+  };
+
+  localStorage.setItem("report", JSON.stringify(report));
 }
 
 function restart() {
