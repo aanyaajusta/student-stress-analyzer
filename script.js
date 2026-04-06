@@ -58,6 +58,25 @@ function analyze() {
     suggestion;
 
   document.getElementById("videoFrame").src = video;
+  // Stress percentage
+let percent = (score / 15) * 100;
+
+// Update bar
+let bar = document.getElementById("stressBar");
+bar.style.width = percent + "%";
+
+// Change color dynamically
+if(percent > 70) {
+  bar.style.background = "red";
+} else if(percent > 40) {
+  bar.style.background = "orange";
+} else {
+  bar.style.background = "green";
+}
+
+// Show score text
+document.getElementById("scoreText").innerText =
+  "Stress Level: " + Math.round(percent) + "%";
 }
 
   // Smart Mapping
