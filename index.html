@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Student Stress Relief Kit Dashboard</title>
+<title>MindEase – Smart Wellness Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+
+/* GLOBAL */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
   display: flex;
+  background: linear-gradient(135deg, #667eea, #764ba2);
 }
 
 /* SIDEBAR */
 .sidebar {
-  width: 220px;
+  width: 240px;
   height: 100vh;
   background: #1e1e2f;
   color: white;
@@ -27,13 +30,14 @@ body {
 
 .sidebar button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin: 10px 0;
   background: none;
   color: white;
   border: none;
   text-align: left;
   cursor: pointer;
+  border-radius: 8px;
 }
 
 .sidebar button:hover {
@@ -44,15 +48,34 @@ body {
 .main {
   flex: 1;
   padding: 40px;
-  background: #f4f4f4;
+}
+
+/* SECTION */
+.section {
+  display: none;
+}
+
+.active {
+  display: block;
 }
 
 /* CARD */
 .card {
   background: white;
-  padding: 20px;
-  margin: 20px 0;
-  border-radius: 10px;
+  padding: 25px;
+  margin: 20px auto;
+  width: 450px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+/* INPUT */
+input, select {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
 }
 
 /* BUTTON */
@@ -62,17 +85,14 @@ button.primary {
   padding: 10px;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
 }
 
-/* SECTIONS */
-.section {
-  display: none;
+/* TEXT */
+.highlight {
+  font-weight: bold;
+  color: #667eea;
 }
 
-.active {
-  display: block;
-}
 </style>
 
 </head>
@@ -81,12 +101,12 @@ button.primary {
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-  <h2>Student Stress Relief Kit</h2>
+  <h2>MindEase</h2>
 
-  <button onclick="showSection('home')">Home</button>
-  <button onclick="showSection('checkin')"> Check-In</button>
-  <button onclick="showSection('study')"> Study Plan</button>
-  <button onclick="showSection('history')"> History</button>
+  <button onclick="showSection('home')">🏠 Home</button>
+  <button onclick="showSection('checkin')">Check-In</button>
+  <button onclick="showSection('history')">📊 Analytics</button>
+  <button onclick="showSection('study')">📚 Study Plan</button>
   <button onclick="showSection('support')">📞 Support</button>
 </div>
 
@@ -95,19 +115,28 @@ button.primary {
 
 <!-- HOME -->
 <div id="home" class="section active">
-  <h1>Welcome</h1>
-  <p>Your mental wellness dashboard</p>
-
   <div class="card">
-    <p>“Small steps every day lead to big changes.”</p>
+    <h1 id="welcomeText">Welcome to Student Stress Relief Kit</h1>
+
+    <p>
+      “Your mental health is an investment, not an expense.”
+    </p>
+
+    <p>
+      Track your stress, understand patterns, and take action.
+    </p>
   </div>
 </div>
 
-<!-- CHECK-IN -->
+<!-- LOGIN + CHECK-IN -->
 <div id="checkin" class="section">
-  <h2>Stress Check-In</h2>
-
   <div class="card">
+
+    <h2>Login</h2>
+    <input type="text" id="name" placeholder="Enter your name">
+
+    <h3>Stress Check-In</h3>
+
     <select id="reason">
       <option value="exam">Exams</option>
       <option value="pressure">Pressure</option>
@@ -122,56 +151,50 @@ button.primary {
     </select>
 
     <select id="sleep">
-      <option value="3">Poor</option>
-      <option value="2">Average</option>
-      <option value="1">Good</option>
+      <option value="3">Poor Sleep</option>
+      <option value="2">Average Sleep</option>
+      <option value="1">Good Sleep</option>
     </select>
 
-    <br><br>
     <button class="primary" onclick="analyze()">Analyze</button>
+
+    <div id="result" style="display:none;">
+      <p id="output"></p>
+      <p id="insight" class="highlight"></p>
+
+      <canvas id="stressChart"></canvas>
+    </div>
+
   </div>
+</div>
 
-  <div id="result" class="card" style="display:none;">
-    <h3>Your Result</h3>
-    <p id="output"></p>
+<!-- ANALYTICS -->
+<div id="history" class="section">
+  <div class="card">
+    <h2>Stress Analytics</h2>
+    <canvas id="historyChart"></canvas>
 
-    <canvas id="stressChart"></canvas>
-
-    <iframe id="videoFrame" width="300" height="200"></iframe>
+    <p id="trendText"></p>
   </div>
 </div>
 
 <!-- STUDY -->
 <div id="study" class="section">
-  <h2>Study Plan</h2>
-
   <div class="card">
-    <p>
-      ~ Use Pomodoro Technique<br>
-      ~ Plan your day<br>
-      ~ Focus on one task at a time
-    </p>
-  </div>
-</div>
-
-<!-- HISTORY -->
-<div id="history" class="section">
-  <h2>History</h2>
-
-  <div class="card">
-    <ul id="historyList"></ul>
+    <h2>Personalized Study Plan</h2>
+    <p id="studyPlan"></p>
   </div>
 </div>
 
 <!-- SUPPORT -->
 <div id="support" class="section">
-  <h2>Support</h2>
-
   <div class="card">
+    <h2>Support</h2>
+
     <p>📞 Helpline: 9152987821</p>
 
     <a href="https://forms.gle/r2ByWGVgDnxsgugj8" target="_blank">
-      <button class="primary">Reach Out</button>
+      <button class="primary">Talk to Someone</button>
     </a>
   </div>
 </div>
@@ -181,78 +204,88 @@ button.primary {
 <script>
 
 function showSection(id) {
-  let sections = document.querySelectorAll('.section');
-  sections.forEach(sec => sec.classList.remove('active'));
-
+  document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-// LOAD HISTORY
-function loadHistory() {
-  let history = JSON.parse(localStorage.getItem("history")) || [];
-  let list = document.getElementById("historyList");
-
-  list.innerHTML = "";
-
-  history.forEach(item => {
-    let li = document.createElement("li");
-    li.innerText = item.date + " - " + item.result;
-    list.appendChild(li);
-  });
-}
-
+// ANALYZE FUNCTION
 function analyze() {
-  let reason = document.getElementById("reason").value;
+  let name = document.getElementById("name").value;
   let frequency = parseInt(document.getElementById("frequency").value);
   let sleep = parseInt(document.getElementById("sleep").value);
+  let reason = document.getElementById("reason").value;
+
+  if(name === "") {
+    alert("Enter name");
+    return;
+  }
 
   let score = frequency + sleep;
-  let result = "";
-  let video = "";
 
-  if(score >= 5) {
-    result = "🔴 High stress detected";
-  } else {
-    result = "🟡 Moderate stress";
-  }
+  let result = score >= 5 ? "High stress detected" : "Moderate stress";
 
-  if(reason === "exam") {
-    video = "https://www.youtube.com/embed/IlU-zDU6aQ0";
-  } else {
-    video = "https://www.youtube.com/embed/odADwWzHR24";
-  }
+  // SMART INSIGHT
+  let insight = score >= 5 ? 
+    "Your stress is consistently high. Consider structured breaks." :
+    "Your stress is manageable but monitor it regularly.";
+
+  // STUDY PLAN
+  let plan = "";
+  if(reason === "exam") plan = "Use Pomodoro + revision cycles";
+  else if(reason === "time") plan = "Plan your day with priorities";
+  else plan = "Focus on one task at a time";
 
   document.getElementById("result").style.display = "block";
   document.getElementById("output").innerText = result;
-  document.getElementById("videoFrame").src = video;
+  document.getElementById("insight").innerText = insight;
+  document.getElementById("studyPlan").innerText = plan;
+
+  document.getElementById("welcomeText").innerText =
+    "Welcome " + name;
 
   // CHART
   new Chart(document.getElementById("stressChart"), {
     type: 'bar',
     data: {
       labels: ["Stress Score"],
-      datasets: [{
-        label: "Your Score",
-        data: [score]
-      }]
+      datasets: [{ data: [score] }]
     }
   });
 
   // SAVE HISTORY
   let history = JSON.parse(localStorage.getItem("history")) || [];
 
-  history.push({
-    score: score,
-    result: result,
-    date: new Date().toLocaleString()
-  });
+  history.push({ score: score });
 
   localStorage.setItem("history", JSON.stringify(history));
 
   loadHistory();
 }
 
-// LOAD ON START
+// HISTORY
+function loadHistory() {
+  let history = JSON.parse(localStorage.getItem("history")) || [];
+
+  let data = history.map(h => h.score);
+
+  new Chart(document.getElementById("historyChart"), {
+    type: 'line',
+    data: {
+      labels: data.map((_, i) => "Attempt " + (i+1)),
+      datasets: [{ label: "Stress Trend", data: data }]
+    }
+  });
+
+  // TREND DETECTION
+  if(data.length >= 2) {
+    let trend = data[data.length-1] > data[0] ?
+      "⚠️ Stress increasing over time" :
+      "✅ Stress improving";
+
+    document.getElementById("trendText").innerText = trend;
+  }
+}
+
 loadHistory();
 
 </script>
