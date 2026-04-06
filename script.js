@@ -1,3 +1,4 @@
+alert("JS Loaded");
 function startSurvey() {
   document.getElementById("survey").style.display = "block";
 }
