@@ -8,6 +8,48 @@ function analyze() {
 
   let profile = "";
   let suggestion = "";
+  let video = "";
+
+  // Stress Level
+  if(level >= 8) {
+    profile += "🔴 High Stress Level\n";
+  } else if(level >= 5) {
+    profile += "🟡 Moderate Stress Level\n";
+  } else {
+    profile += "🟢 Low Stress Level\n";
+  }
+
+  // Smart Mapping
+  if(reason === "exam") {
+    profile += "📚 Type: Exam Pressure\n";
+    suggestion = "Break study into smaller sessions and follow a schedule.";
+    video = "https://www.youtube.com/embed/IlU-zDU6aQ0";
+  }
+  else if(reason === "pressure") {
+    profile += "😰 Type: Performance Anxiety\n";
+    suggestion = "Take breaks and avoid overthinking.";
+    video = "https://www.youtube.com/embed/ZToicYcHIOU";
+  }
+  else if(reason === "time") {
+    profile += "⏳ Type: Time Management Issue\n";
+    suggestion = "Use Pomodoro technique and prioritize tasks.";
+    video = "https://www.youtube.com/embed/mNBmG24djoY";
+  }
+  else {
+    profile += "💭 Type: Emotional Stress\n";
+    suggestion = "Practice breathing exercises and relax your mind.";
+    video = "https://www.youtube.com/embed/odADwWzHR24";
+  }
+
+  // Show result
+  document.getElementById("survey").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("output").innerText = profile + "\n\n" + suggestion;
+  document.getElementById("videoFrame").src = video;
+}
+  let profile = "";
+  let suggestion = "";
 
   // Stress Level Analysis
   if(level >= 8) {
