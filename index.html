@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stress Analyzer</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f4f4f4;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 20px auto;
+      width: 300px;
+      border-radius: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Stress Analyzer</h1>
+<p>Let’s understand how you're feeling</p>
+
+<button onclick="startSurvey()">Start Check-In</button>
+
+<div id="survey" class="card" style="display:none;">
+  <h3>Select your stress level</h3>
+  <input type="range" min="1" max="10" id="stressLevel">
+
+  <br><br>
+  <button onclick="showResult()">Analyze</button>
+</div>
+
+<div id="result" class="card" style="display:none;">
+  <h3>Your Result</h3>
+  <p id="output"></p>
+</div>
+
+<script>
+function startSurvey() {
+  document.getElementById("survey").style.display = "block";
+}
+
+function showResult() {
+  let level = document.getElementById("stressLevel").value;
+
+  let text = "";
+
+  if(level > 7) {
+    text = "High stress detected";
+  } else {
+    text = "Moderate stress";
+  }
+
+  document.getElementById("survey").style.display = "none";
+  document.getElementById("result").style.display = "block";
+  document.getElementById("output").innerText = text;
+}
+</script>
+
+</body>
+</html>
