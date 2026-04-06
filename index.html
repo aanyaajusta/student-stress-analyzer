@@ -53,12 +53,20 @@ body {
   background: white;
   padding: 25px;
   margin: 20px auto;
-  width: 450px;
+  max-width: 750px;
+  width:90%;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   text-align: center;
 }
+.card p {
+  text-align:left;
+  line-height:1.6;
+}
 
+  .card{
+  padding: 30px 35px;
+  }
 input, select {
   width: 90%;
   padding: 10px;
@@ -91,7 +99,7 @@ iframe {
 
 <div class="sidebar">
   <h2>MindEase</h2>
-  <button onclick="showSection('home')">🏠a Home</button>
+  <button onclick="showSection('home')">🏠 Home</button>
   <button onclick="showSection('checkin')">🔔 Check-In</button>
   <button onclick="showSection('history')">📊 Analytics</button>
   <button onclick="showSection('study')">📚 Study</button>
