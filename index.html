@@ -1,74 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Stress Analyzer</title>
+<meta charset="UTF-8">
+<title>MindEase – Student Stress Analyzer</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      background: #f4f4f4;
-    }
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  margin: 0;
+  color: white;
+  text-align: center;
+}
 
-    .card {
-      background: white;
-      padding: 20px;
-      margin: 20px auto;
-      width: 300px;
-      border-radius: 10px;
-    }
+.container {
+  padding: 40px;
+}
 
-    button {
-      padding: 10px 20px;
-      background: green;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
+.card {
+  background: white;
+  color: black;
+  padding: 25px;
+  margin: 20px auto;
+  width: 320px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+input, select {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+button {
+  padding: 10px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #5a67d8;
+}
+</style>
+
 </head>
 
 <body>
 
-<h1>Stress Analyzer</h1>
-<p>Let’s understand how you're feeling</p>
+<div class="container">
 
-<button onclick="startSurvey()">Start Check-In</button>
+<h1>MindEase</h1>
+<p>Smart Mental Wellness for Students</p>
 
-<div id="survey" class="card" style="display:none;">
-  <h3>Select your stress level</h3>
-  <input type="range" min="1" max="10" id="stressLevel">
-
-  <br><br>
-  <button onclick="showResult()">Analyze</button>
+<!-- LOGIN -->
+<div id="login" class="card">
+  <h2>Login</h2>
+  <input type="text" id="name" placeholder="Enter your name">
+  <input type="email" id="email" placeholder="Enter your email">
+  <button onclick="startSurvey()">Continue</button>
 </div>
 
+<!-- SURVEY -->
+<div id="survey" class="card" style="display:none;">
+  <h2>How are you feeling today?</h2>
+
+  <p>What is stressing you most?</p>
+  <select id="reason">
+    <option value="exam">Exams</option>
+    <option value="pressure">Academic Pressure</option>
+    <option value="time">Time Management</option>
+    <option value="personal">Personal Issues</option>
+  </select>
+
+  <p>How often do you feel stressed?</p>
+  <select id="frequency">
+    <option value="3">Very Often</option>
+    <option value="2">Sometimes</option>
+    <option value="1">Rarely</option>
+  </select>
+
+  <p>How is your sleep?</p>
+  <select id="sleep">
+    <option value="3">Poor</option>
+    <option value="2">Average</option>
+    <option value="1">Good</option>
+  </select>
+
+  <button onclick="analyze()">Analyze</button>
+</div>
+
+<!-- RESULT -->
 <div id="result" class="card" style="display:none;">
-  <h3>Your Result</h3>
+  <h2>Your Stress Report</h2>
   <p id="output"></p>
+
+  <iframe id="videoFrame" width="300" height="200"></iframe>
+
+  <br><br>
+  <button onclick="restart()">Start Again</button>
+</div>
+
 </div>
 
 <script>
+
 function startSurvey() {
+  let name = document.getElementById("name").value;
+
+  if(name === "") {
+    alert("Please enter your name");
+    return;
+  }
+
+  document.getElementById("login").style.display = "none";
   document.getElementById("survey").style.display = "block";
 }
 
-function showResult() {
-  let level = document.getElementById("stressLevel").value;
+function analyze() {
+  let reason = document.getElementById("reason").value;
+  let frequency = parseInt(document.getElementById("frequency").value);
+  let sleep = parseInt(document.getElementById("sleep").value);
 
-  let text = "";
+  let score = frequency + sleep;
 
-  if(level > 7) {
-    text = "High stress detected";
+  let result = "";
+  let video = "";
+
+  if(score >= 5) {
+    result = "High stress detected. You may need structured support.";
+  } else if(score >= 3) {
+    result = "Moderate stress. Try managing routines better.";
   } else {
-    text = "Moderate stress";
+    result = "Low stress. Keep maintaining balance!";
+  }
+
+  if(reason === "exam") {
+    video = "https://www.youtube.com/embed/IlU-zDU6aQ0";
+  } else if(reason === "pressure") {
+    video = "https://www.youtube.com/embed/ZToicYcHIOU";
+  } else if(reason === "time") {
+    video = "https://www.youtube.com/embed/mNBmG24djoY";
+  } else {
+    video = "https://www.youtube.com/embed/odADwWzHR24";
   }
 
   document.getElementById("survey").style.display = "none";
   document.getElementById("result").style.display = "block";
-  document.getElementById("output").innerText = text;
+
+  document.getElementById("output").innerText = result;
+  document.getElementById("videoFrame").src = video;
 }
+
+function restart() {
+  location.reload();
+}
+
 </script>
 
 </body>
