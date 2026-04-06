@@ -3,21 +3,62 @@ function startSurvey() {
 }
 
 function analyze() {
-  let level = document.getElementById("stressLevel").value;
+
+  let stress = parseInt(document.getElementById("stressLevel").value);
+  let sleep = parseInt(document.getElementById("sleep").value);
+  let focus = parseInt(document.getElementById("focus").value);
   let reason = document.getElementById("reason").value;
+
+  // SCORING SYSTEM
+  let score = stress + (4 - sleep) + focus;
+
+  let level = "";
+  if(score >= 12) {
+    level = "🔴 High Stress";
+  } else if(score >= 8) {
+    level = "🟡 Moderate Stress";
+  } else {
+    level = "🟢 Low Stress";
+  }
 
   let profile = "";
   let suggestion = "";
   let video = "";
 
-  // Stress Level
-  if(level >= 8) {
-    profile += "🔴 High Stress Level\n";
-  } else if(level >= 5) {
-    profile += "🟡 Moderate Stress Level\n";
-  } else {
-    profile += "🟢 Low Stress Level\n";
+  // PROFILE MAPPING
+  if(reason === "exam") {
+    profile = "📚 Exam Pressure";
+    suggestion = "Use study planning and break tasks into smaller chunks.";
+    video = "https://www.youtube.com/embed/IlU-zDU6aQ0";
   }
+  else if(reason === "pressure") {
+    profile = "😰 Performance Anxiety";
+    suggestion = "Take breaks and reduce overthinking.";
+    video = "https://www.youtube.com/embed/ZToicYcHIOU";
+  }
+  else if(reason === "time") {
+    profile = "⏳ Time Management Issues";
+    suggestion = "Use Pomodoro technique and plan your day.";
+    video = "https://www.youtube.com/embed/mNBmG24djoY";
+  }
+  else {
+    profile = "💭 Emotional Stress";
+    suggestion = "Practice breathing exercises and self-care.";
+    video = "https://www.youtube.com/embed/odADwWzHR24";
+  }
+
+  // SHOW RESULT
+  document.getElementById("survey").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("output").innerText =
+    "Stress Score: " + score + "\n" +
+    "Level: " + level + "\n" +
+    "Profile: " + profile + "\n\n" +
+    suggestion;
+
+  document.getElementById("videoFrame").src = video;
+}
 
   // Smart Mapping
   if(reason === "exam") {
