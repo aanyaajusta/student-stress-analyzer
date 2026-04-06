@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Stress Analyzer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <h1>Welcome to Stress Analyzer</h1>
+  <p>Understand your stress and get personalized support</p>
+
+  <button onclick="startSurvey()">Start Check-In</button>
+
+  <div id="survey" style="display:none;">
+    <h2>How are you feeling?</h2>
+    <button onclick="selectMood('Stressed')">Stressed</button>
+    <button onclick="selectMood('Anxious')">Anxious</button>
+    <button onclick="selectMood('Tired')">Tired</button>
+  </div>
+
+  <div id="result" style="display:none;">
+    <h2>Your Result</h2>
+    <p id="output"></p>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
