@@ -1,49 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>MindEase – Student Stress Analyzer</title>
+<title>Student Stress Relief Kit Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
   margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background: #1e1e2f;
   color: white;
-  text-align: center;
+  padding: 20px;
 }
 
-.container {
-  padding: 40px;
+.sidebar h2 {
+  margin-bottom: 30px;
 }
 
-.card {
-  background: white;
-  color: black;
-  padding: 25px;
-  margin: 20px auto;
-  width: 320px;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-input, select {
-  width: 90%;
+.sidebar button {
+  width: 100%;
   padding: 10px;
   margin: 10px 0;
+  background: none;
+  color: white;
+  border: none;
+  text-align: left;
+  cursor: pointer;
 }
 
-button {
-  padding: 10px 20px;
+.sidebar button:hover {
+  background: #33334d;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 40px;
+  background: #f4f4f4;
+}
+
+/* CARD */
+.card {
+  background: white;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+}
+
+/* BUTTON */
+button.primary {
   background: #667eea;
   color: white;
+  padding: 10px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
 }
 
-button:hover {
-  background: #5a67d8;
+/* SECTIONS */
+.section {
+  display: none;
+}
+
+.active {
+  display: block;
 }
 </style>
 
@@ -51,90 +79,126 @@ button:hover {
 
 <body>
 
-<div class="container">
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2>Student Stress Relief Kit</h2>
 
-<h1>MindEase</h1>
-<p>Smart Mental Wellness for Students</p>
-
-<!-- LOGIN -->
-<div id="login" class="card">
-  <h2>Login</h2>
-  <input type="text" id="name" placeholder="Enter your name">
-  <input type="email" id="email" placeholder="Enter your email">
-  <button onclick="startSurvey()">Continue</button>
+  <button onclick="showSection('home')">Home</button>
+  <button onclick="showSection('checkin')"> Check-In</button>
+  <button onclick="showSection('study')"> Study Plan</button>
+  <button onclick="showSection('history')"> History</button>
+  <button onclick="showSection('support')">📞 Support</button>
 </div>
 
-<!-- SURVEY -->
-<div id="survey" class="card" style="display:none;">
-  <h2>How are you feeling today?</h2>
+<!-- MAIN -->
+<div class="main">
 
-  <p>Main stress reason</p>
-  <select id="reason">
-    <option value="exam">Exams</option>
-    <option value="pressure">Academic Pressure</option>
-    <option value="time">Time Management</option>
-    <option value="personal">Personal Issues</option>
-  </select>
+<!-- HOME -->
+<div id="home" class="section active">
+  <h1>Welcome</h1>
+  <p>Your mental wellness dashboard</p>
 
-  <p>How often do you feel stressed?</p>
-  <select id="frequency">
-    <option value="3">Very Often</option>
-    <option value="2">Sometimes</option>
-    <option value="1">Rarely</option>
-  </select>
-
-  <p>How is your sleep?</p>
-  <select id="sleep">
-    <option value="3">Poor</option>
-    <option value="2">Average</option>
-    <option value="1">Good</option>
-  </select>
-
-  <button onclick="analyze()">Analyze</button>
+  <div class="card">
+    <p>“Small steps every day lead to big changes.”</p>
+  </div>
 </div>
 
-<!-- RESULT -->
-<div id="result" class="card" style="display:none;">
-  <h2>Your Stress Report</h2>
+<!-- CHECK-IN -->
+<div id="checkin" class="section">
+  <h2>Stress Check-In</h2>
 
-  <h3 id="userDisplay"></h3>
+  <div class="card">
+    <select id="reason">
+      <option value="exam">Exams</option>
+      <option value="pressure">Pressure</option>
+      <option value="time">Time Issues</option>
+      <option value="personal">Personal</option>
+    </select>
 
-  <p id="output"></p>
+    <select id="frequency">
+      <option value="3">Very Often</option>
+      <option value="2">Sometimes</option>
+      <option value="1">Rarely</option>
+    </select>
 
-  <h3>Recommended Video</h3>
-  <iframe id="videoFrame" width="300" height="200"></iframe>
+    <select id="sleep">
+      <option value="3">Poor</option>
+      <option value="2">Average</option>
+      <option value="1">Good</option>
+    </select>
 
-  <h3>Your Study Plan</h3>
-  <p id="plan"></p>
+    <br><br>
+    <button class="primary" onclick="analyze()">Analyze</button>
+  </div>
 
-  <h3>Need Support?</h3>
-  <ul style="text-align:left;">
-    <li>📞 India Helpline: 9152987821</li>
-    <li>🌐 https://www.mentalhealth.gov</li>
-    <li>💬 Talk to a trusted friend or counselor</li>
-  </ul>
+  <div id="result" class="card" style="display:none;">
+    <h3>Your Result</h3>
+    <p id="output"></p>
 
-  <button onclick="restart()">Start Again</button>
+    <canvas id="stressChart"></canvas>
+
+    <iframe id="videoFrame" width="300" height="200"></iframe>
+  </div>
+</div>
+
+<!-- STUDY -->
+<div id="study" class="section">
+  <h2>Study Plan</h2>
+
+  <div class="card">
+    <p>
+      ~ Use Pomodoro Technique<br>
+      ~ Plan your day<br>
+      ~ Focus on one task at a time
+    </p>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div id="history" class="section">
+  <h2>History</h2>
+
+  <div class="card">
+    <ul id="historyList"></ul>
+  </div>
+</div>
+
+<!-- SUPPORT -->
+<div id="support" class="section">
+  <h2>Support</h2>
+
+  <div class="card">
+    <p>📞 Helpline: 9152987821</p>
+
+    <a href="https://forms.gle/r2ByWGVgDnxsgugj8" target="_blank">
+      <button class="primary">Reach Out</button>
+    </a>
+  </div>
 </div>
 
 </div>
 
 <script>
 
-function startSurvey() {
-  let name = document.getElementById("name").value;
-  let email = document.getElementById("email").value;
+function showSection(id) {
+  let sections = document.querySelectorAll('.section');
+  sections.forEach(sec => sec.classList.remove('active'));
 
-  if(name === "" || email === "") {
-    alert("Please fill all details");
-    return;
-  }
+  document.getElementById(id).classList.add('active');
+}
 
-  localStorage.setItem("userName", name);
-  localStorage.setItem("userEmail", email);
+// LOAD HISTORY
+function loadHistory() {
+  let history = JSON.parse(localStorage.getItem("history")) || [];
+  let list = document.getElementById("historyList");
 
-  document.getElementById("login").style.display = "none";
-  document.getElementById("survey").style.display = "block";
+  list.innerHTML = "";
+
+  history.forEach(item => {
+    let li = document.createElement("li");
+    li.innerText = item.date + " - " + item.result;
+    list.appendChild(li);
+  });
 }
 
 function analyze() {
@@ -143,61 +207,53 @@ function analyze() {
   let sleep = parseInt(document.getElementById("sleep").value);
 
   let score = frequency + sleep;
-
   let result = "";
   let video = "";
-  let plan = "";
 
   if(score >= 5) {
-    result = "🔴 High stress detected. You may need structured support.";
-  } else if(score >= 3) {
-    result = "🟡 Moderate stress. Try improving daily habits.";
+    result = "🔴 High stress detected";
   } else {
-    result = "🟢 Low stress. Keep maintaining balance!";
+    result = "🟡 Moderate stress";
   }
 
   if(reason === "exam") {
     video = "https://www.youtube.com/embed/IlU-zDU6aQ0";
-    plan = "📚 Study Plan: Use Pomodoro (25 min study + 5 min break)";
-  }
-  else if(reason === "pressure") {
-    video = "https://www.youtube.com/embed/ZToicYcHIOU";
-    plan = "💡 Focus on one task at a time and avoid overthinking";
-  }
-  else if(reason === "time") {
-    video = "https://www.youtube.com/embed/mNBmG24djoY";
-    plan = "⏳ Plan your day using priorities and to-do lists";
-  }
-  else {
+  } else {
     video = "https://www.youtube.com/embed/odADwWzHR24";
-    plan = "🧘 Take time for yourself and practice relaxation";
   }
 
-  let user = localStorage.getItem("userName");
-
-  document.getElementById("survey").style.display = "none";
   document.getElementById("result").style.display = "block";
-
-  document.getElementById("userDisplay").innerText =
-    "Hello " + user + ", here is your report:";
-
   document.getElementById("output").innerText = result;
   document.getElementById("videoFrame").src = video;
-  document.getElementById("plan").innerText = plan;
 
-  let report = {
+  // CHART
+  new Chart(document.getElementById("stressChart"), {
+    type: 'bar',
+    data: {
+      labels: ["Stress Score"],
+      datasets: [{
+        label: "Your Score",
+        data: [score]
+      }]
+    }
+  });
+
+  // SAVE HISTORY
+  let history = JSON.parse(localStorage.getItem("history")) || [];
+
+  history.push({
     score: score,
     result: result,
-    reason: reason,
     date: new Date().toLocaleString()
-  };
+  });
 
-  localStorage.setItem("report", JSON.stringify(report));
+  localStorage.setItem("history", JSON.stringify(history));
+
+  loadHistory();
 }
 
-function restart() {
-  location.reload();
-}
+// LOAD ON START
+loadHistory();
 
 </script>
 
