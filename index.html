@@ -265,7 +265,6 @@ function showSection(id) {
   document.getElementById(id).classList.add('active');
 }
 
-// ANALYZE FUNCTION
 function analyze() {
   let name = document.getElementById("name").value;
   let frequency = parseInt(document.getElementById("frequency").value);
@@ -273,19 +272,46 @@ function analyze() {
   let reason = document.getElementById("reason").value;
 
   if(name === "") {
-    alert("Enter name");
+    alert("Enter your name");
     return;
   }
 
   let score = frequency + sleep;
 
-  let result = score >= 5 ? "High stress detected" : "Moderate stress";
+  let result = score >= 5 ? 
+    "🔴 You are experiencing high stress." :
+    "🟡 You have moderate stress levels.";
 
-  // SMART INSIGHT
-  let insight = score >= 5 ? 
-    "Your stress is consistently high. Consider structured breaks." :
-    "Your stress is manageable but monitor it regularly.";
+  let insight = score >= 5 ?
+    "Take breaks, manage workload, and prioritize mental health." :
+    "Maintain balance and monitor stress regularly.";
 
+  let video = "";
+  let link = "";
+
+  if(reason === "exam") {
+    video = "https://www.youtube.com/embed/IlU-zDU6aQ0";
+    link = "https://www.verywellmind.com/tips-to-reduce-exam-stress-2795369";
+  } else {
+    video = "https://www.youtube.com/embed/odADwWzHR24";
+    link = "https://www.helpguide.org/articles/stress/stress-management.htm";
+  }
+
+  document.getElementById("result").style.display = "block";
+  document.getElementById("output").innerText = result;
+  document.getElementById("insight").innerText = insight;
+  document.getElementById("videoFrame").src = video;
+  document.getElementById("resourceLink").href = link;
+
+  document.getElementById("welcomeText").innerText = "Welcome " + name;
+
+  new Chart(document.getElementById("stressChart"), {
+    type: 'bar',
+    data: {
+      labels: ["Stress Score"],
+      datasets: [{ data: [score] }]
+    }
+  });
 
   let history = JSON.parse(localStorage.getItem("history")) || [];
   history.push({ score: score });
